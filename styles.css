@@ -146,19 +146,36 @@ button{font:inherit}
 .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
 .project-card{
   position:relative;background:rgba(14,44,32,.82);border:1px solid var(--line);
-  overflow:hidden;cursor:pointer;transition:.3s;min-height:560px;
+  overflow:hidden;cursor:pointer;transition:.3s;min-height:0;
+  display:flex;flex-direction:column;
 }
 .project-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:rgba(166,201,107,.7)}
+/*
+  As miniaturas usam o mesmo formato horizontal em todos os projetos.
+  A imagem preenche o quadro para facilitar a leitura no grid; ao clicar
+  em “Ver detalhes”, a imagem original completa é exibida sem cortes.
+*/
 .project-image{
-  height:330px;background:#0b2118;display:grid;place-items:center;
-  padding:14px;border-bottom:1px solid var(--line);
+  width:100%;aspect-ratio:16/9;min-height:0;
+  background:#0b2118;overflow:hidden;position:relative;
+  border-bottom:1px solid var(--line);
 }
-.project-image img{width:100%;height:100%;object-fit:contain}
-.project-copy{padding:24px}
+.project-image img{
+  width:100%;height:100%;display:block;
+  object-fit:cover;object-position:center;
+  transition:transform .35s ease;
+}
+.project-card:hover .project-image img{transform:scale(1.025)}
+.project-image::after{
+  content:"";position:absolute;inset:auto 0 0 0;height:30%;pointer-events:none;
+  background:linear-gradient(to top,rgba(9,31,23,.28),transparent);
+}
+.project-copy{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
 .project-meta{display:flex;justify-content:space-between;gap:12px;color:var(--green);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
 .project-card h3{font-family:"Barlow Condensed";font-size:34px;text-transform:uppercase;margin:12px 0 8px}
 .project-card p{color:var(--muted);line-height:1.65;margin:0}
-.project-open{display:inline-block;margin-top:18px;color:var(--green);font-weight:700;font-size:13px}
+.project-open{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:18px;color:var(--green);font-weight:700;font-size:13px}
+.project-open::after{content:"↗"}
 
 .field-section{
   max-width:none;display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center;
@@ -234,7 +251,7 @@ footer{max-width:var(--max);margin:auto;padding:30px 24px 50px;border-top:1px so
   .section{padding:78px 18px}
   .about-grid{gap:34px}
   .expertise-grid{grid-template-columns:1fr}
-  .project-image{height:250px}
+  .project-image{aspect-ratio:16/10}
   .field-gallery{grid-template-columns:1fr}
   .field-gallery img{height:420px}
   .contact-panel,.contact-stats{padding:26px}

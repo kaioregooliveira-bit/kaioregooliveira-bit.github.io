@@ -14,7 +14,7 @@ function renderProjects(filter='Todos'){
         <div class="project-meta"><span>${p.number}</span><span>${p.category}</span></div>
         <h3>${p.title}</h3>
         <p>${p.subtitle}</p>
-        <span class="project-open">Ver detalhes ↗</span>
+        <span class="project-open">Ver detalhes</span>
       </div>
     </article>`).join('');
   bindProjectCards();
